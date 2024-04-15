@@ -1,5 +1,5 @@
 from sympy import symbols, sqrt, diff, oo
-
+from write import write_to_excel_2
 
 def find_n_for_trapezoid(allowed_error: float, upper_bound: float = 1.1, lower_bound: float = 0):
     """
@@ -42,7 +42,17 @@ def find_n_for_trapezoid(allowed_error: float, upper_bound: float = 1.1, lower_b
     n_for_trapezoid = sqrt((abs(k) * (upper_bound - lower_bound)**3) / (24 * allowed_error))
     print("Number of intervals for the trapezoidal rule:", n_for_trapezoid)
     print("Number of intervals rounded for the trapezoidal rule:", round(n_for_trapezoid))
-
+    data = [
+        ("Attribute", "Value"),
+        ("rule", "Trapezoid rule"),
+        ("allowed error", allowed_error),
+        ("k (max of second derivative)", str(abs(k))),
+        ("Upper bound", r),
+        ("Lower bound", 0),
+        ("Number of intervals", str(n_for_trapezoid)),
+        ("Number of intervals rounded", str(round(n_for_trapezoid)))
+    ]
+    write_to_excel_2(data, "errors_calc.xlsx")
 
 def find_n_for_midpoint(allowed_error: float, upper_bound: float = 1.1, lower_bound: float = 0):
     """
@@ -84,6 +94,18 @@ def find_n_for_midpoint(allowed_error: float, upper_bound: float = 1.1, lower_bo
     n_for_midpoint = sqrt((abs(k) * (upper_bound - lower_bound)**3) / (12 * allowed_error))
     print("Number of intervals for the midpoint rule:", n_for_midpoint)
     print("Number of intervals rounded for the midpoint rule:", round(n_for_midpoint))
+    data = [
+        ("Attribute", "Value"),
+        ("rule", "Midpoint rule"),
+        ("allowed error", allowed_error),
+        ("k (max of second derivative)", str(abs(k))),
+        ("Upper bound", r),
+        ("Lower bound", 0),
+        ("Number of intervals", str(n_for_midpoint)),
+        ("Number of intervals rounded", str(round(n_for_midpoint)))
+    ]
+    write_to_excel_2(data, "errors_calc.xlsx")
+
 
 
 def find_n_for_simpson(allowed_error: float, upper_bound: float = 1.1, lower_bound: float = 0):
@@ -120,6 +142,18 @@ def find_n_for_simpson(allowed_error: float, upper_bound: float = 1.1, lower_bou
         k = fourth_derivative_at_1_1
     else:
         k = oo
-    n = ((abs(k) * (upper_bound - lower_bound)**5) / (180 * allowed_error))**(1/4)
-    print("Number of intervals for Simpson's rule:", n)
-    print("Number of intervals rounded for Simpson's rule:", round(n))
+
+    n_for_simpson = ((abs(k) * (upper_bound - lower_bound)**5) / (180 * allowed_error))**(1/4)
+    print("Number of intervals for Simpson's rule:", n_for_simpson)
+    print("Number of intervals rounded for Simpson's rule:", round(n_for_simpson))
+    data = [
+        ("Attribute", "Value"),
+        ("rule", "Simpon's rule"),
+        ("allowed error", allowed_error),
+        ("k (max of fourth interval)", str(abs(k))),
+        ("Upper bound", r),
+        ("Lower bound", 0),
+        ("Number of intervals", str(n_for_simpson)),
+        ("Number of intervals rounded", str(round(n_for_simpson)))
+    ]
+    write_to_excel_2(data, "errors_calc.xlsx")

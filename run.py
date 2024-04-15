@@ -7,7 +7,7 @@ from calculate_error import (
     find_n_for_trapezoid
 )
 
-# Example usage
+#Example usage
 circle_trapezoid_approx(12, 1.1)
 circle_trapezoid_approx(36, 1.1)
 circle_trapezoid_approx(144, 1.1)

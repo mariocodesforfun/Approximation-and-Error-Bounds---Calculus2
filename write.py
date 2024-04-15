@@ -50,3 +50,49 @@ def write_to_excel(data: List[Tuple[str, float]], x_values: List[float], y_value
     wb.save(filename)
     # Close the workbook
     wb.close()
+
+
+
+def write_to_excel_2(data, filename):
+    """
+    Write data to an Excel file.
+
+    Args:
+        data (List[Tuple[str, float]]): List of tuples containing attribute names and corresponding values.
+        filename (str): Name of the Excel file to write to.
+    """
+    try:
+        wb = load_workbook(filename)
+    except FileNotFoundError:
+        wb = Workbook()
+
+    ws = wb.active
+
+    # Find the next empty row after leaving three empty rows
+    empty_rows_count = 0
+    next_row = 1  # Start from the first row
+    for row in ws.iter_rows(values_only=True):
+        if not any(row):
+            empty_rows_count += 1
+            if empty_rows_count == 3:
+                next_row = ws.max_row + 1  # Next empty row after leaving three empty rows
+                break
+        else:
+            empty_rows_count = 0  # Reset the count if a non-empty row is encountered
+
+    # Write data to the worksheet starting from the next empty row
+    for row_data in data:
+        row_values = []
+        for value in row_data:
+            if isinstance(value, float):
+                row_values.append(str(value))  # Convert float to string
+            else:
+                row_values.append(value)
+        ws.append(row_values)
+
+    # Save the workbook
+    wb.save(filename)
+    # Close the workbook
+    wb.close()
+
+
